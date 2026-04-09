@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public API Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Public API Playground</h1>
+        <p>Explore different public APIs with a single click</p>
+    </header>
+
+    <main class="container">
+        <!-- Section 1: Dog Finder -->
+        <section class="card" id="dog-finder">
+            <div class="card-header">
+                <h2>🐶 Dog Finder</h2>
+            </div>
+            <div class="card-body">
+                <div id="dog-result" class="result-container placeholder">
+                    <p class="placeholder-text">Click to fetch a dog picture!</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button id="btn-get-dog" class="btn primary">Get Dog</button>
+                <button id="btn-copy-dog" class="btn secondary hidden">Copy Image URL</button>
+            </div>
+        </section>
+
+        <!-- Section 2: Joke Generator -->
+        <section class="card" id="joke-generator">
+            <div class="card-header">
+                <h2>😆 Joke Generator</h2>
+            </div>
+            <div class="card-body">
+                <div id="joke-result" class="result-container text-result placeholder">
+                    <p class="placeholder-text">Need a laugh? Get a joke.</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button id="btn-get-joke" class="btn primary">Get Joke</button>
+                <button id="btn-next-joke" class="btn secondary hidden">Next Joke</button>
+            </div>
+        </section>
+
+        <!-- Section 3: Random User Profile -->
+        <section class="card" id="random-user">
+            <div class="card-header">
+                <h2>👤 Random User</h2>
+            </div>
+            <div class="card-body">
+                <div id="user-result" class="result-container placeholder">
+                    <p class="placeholder-text">Generate a random persona.</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button id="btn-get-user" class="btn primary">Get User</button>
+            </div>
+        </section>
+
+        <!-- Section 4: JSONPlaceholder Explorer -->
+        <section class="card span-2" id="json-explorer">
+            <div class="card-header">
+                <h2>🌐 JSON Explorer</h2>
+                <div class="filters">
+                    <button class="btn small active" data-type="posts">Posts</button>
+                    <button class="btn small" data-type="comments">Comments</button>
+                    <button class="btn small" data-type="users">Users</button>
+                </div>
+            </div>
+            <div class="card-body scrollable">
+                <div id="json-result" class="result-container text-result placeholder">
+                    <p class="placeholder-text">Click fetch to view JSON data.</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button id="btn-fetch-json" class="btn primary">Fetch Data</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
