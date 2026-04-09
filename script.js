@@ -222,3 +222,57 @@ const fetchJsonData = async () => {
 };
 
 getJsonBtn.addEventListener('click', fetchJsonData);
+
+
+// 5. Cat Facts
+const getCatBtn = document.getElementById('btn-get-cat');
+const catResult = document.getElementById('cat-result');
+
+const fetchCatFact = async () => {
+    try {
+        showLoader(catResult);
+        getCatBtn.disabled = true;
+
+        const response = await fetch('https://catfact.ninja/fact');
+        if (!response.ok) throw new Error('Failed to fetch cat fact');
+        const data = await response.json();
+
+        catResult.innerHTML = `
+            <p class="joke-setup">🐾 ${data.fact}</p>
+        `;
+    } catch (error) {
+        showError(catResult, error.message);
+    } finally {
+        getCatBtn.disabled = false;
+    }
+};
+
+getCatBtn.addEventListener('click', fetchCatFact);
+
+
+// 6. Advice Generator
+const getAdviceBtn = document.getElementById('btn-get-advice');
+const adviceResult = document.getElementById('advice-result');
+
+const fetchAdvice = async () => {
+    try {
+        showLoader(adviceResult);
+        getAdviceBtn.disabled = true;
+
+        /* advice API is sometimes cached heavily, appending a timestamp helps get a random one */
+        const timestamp = new Date().getTime();
+        const response = await fetch(`https://api.adviceslip.com/advice?t=${timestamp}`);
+        if (!response.ok) throw new Error('Failed to fetch advice');
+        const data = await response.json();
+
+        adviceResult.innerHTML = `
+            <p class="joke-setup">"${data.slip.advice}"</p>
+        `;
+    } catch (error) {
+        showError(adviceResult, error.message);
+    } finally {
+        getAdviceBtn.disabled = false;
+    }
+};
+
+getAdviceBtn.addEventListener('click', fetchAdvice);
