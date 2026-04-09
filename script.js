@@ -149,79 +149,31 @@ const fetchUser = async () => {
 getUserBtn.addEventListener('click', fetchUser);
 
 
-// 4. JSONPlaceholder Explorer
-const getJsonBtn = document.getElementById('btn-fetch-json');
-const jsonResult = document.getElementById('json-result');
-const filterBtns = document.querySelectorAll('.filters .btn');
+// 4. Decision Maker
+const getDecisionBtn = document.getElementById('btn-get-decision');
+const decisionResult = document.getElementById('decision-result');
 
-let currentJsonEndpoint = 'posts';
-
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        // Update active class
-        filterBtns.forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        // Update endpoint
-        currentJsonEndpoint = e.target.dataset.type;
-        // Auto-fetch if there's already content, or if user wants to play around
-        if(!jsonResult.classList.contains('placeholder')) {
-            fetchJsonData();
-        }
-    });
-});
-
-const fetchJsonData = async () => {
+const fetchDecision = async () => {
     try {
-        showLoader(jsonResult);
-        getJsonBtn.disabled = true;
+        showLoader(decisionResult);
+        getDecisionBtn.disabled = true;
 
-        const response = await fetch(`https://jsonplaceholder.typicode.com/${currentJsonEndpoint}?_limit=10`);
-        if (!response.ok) throw new Error(`Failed to fetch ${currentJsonEndpoint}`);
+        const response = await fetch('https://yesno.wtf/api');
+        if (!response.ok) throw new Error('Failed to fetch decision');
         const data = await response.json();
 
-        // Build HTML differently based on data type
-        let htmlContent = '';
-        
-        if (data.length === 0) {
-            htmlContent = '<p>No data found.</p>';
-        } else {
-            data.forEach(item => {
-                if (currentJsonEndpoint === 'posts') {
-                    htmlContent += `
-                        <div class="json-item">
-                            <h3>${item.title}</h3>
-                            <p>${item.body.substring(0, 80)}...</p>
-                        </div>
-                    `;
-                } else if (currentJsonEndpoint === 'comments') {
-                    htmlContent += `
-                        <div class="json-item">
-                            <h3>💬 ${item.email}</h3>
-                            <p>${item.name}</p>
-                        </div>
-                    `;
-                } else if (currentJsonEndpoint === 'users') {
-                    htmlContent += `
-                        <div class="json-item">
-                            <h3>👤 ${item.name} (@${item.username})</h3>
-                            <p>Company: ${item.company.name}</p>
-                        </div>
-                    `;
-                }
-            });
-        }
-        
-        jsonResult.innerHTML = htmlContent;
-        jsonResult.parentElement.classList.add('scrollable');
-
+        decisionResult.innerHTML = `
+            <img src="${data.image}" alt="${data.answer}" class="dog-image">
+            <span class="breed-badge" style="font-size: 1.5rem; text-transform: uppercase;">${data.answer}</span>
+        `;
     } catch (error) {
-        showError(jsonResult, error.message);
+        showError(decisionResult, error.message);
     } finally {
-        getJsonBtn.disabled = false;
+        getDecisionBtn.disabled = false;
     }
 };
 
-getJsonBtn.addEventListener('click', fetchJsonData);
+getDecisionBtn.addEventListener('click', fetchDecision);
 
 
 // 5. Cat Facts
